@@ -10,12 +10,12 @@ import (
 func main() {
 
 	http.HandleFunc("/getservice", handler.GetServiceHandler)
-	http.HandleFunc("/GetSevicebyId", handler.GetServiceByIdHandler)
-	http.HandleFunc("/AddService", handler.AddServiceHandler)
-	http.HandleFunc("/UpdateService", handler.UpdateServiceHandler)
-	http.HandleFunc("/DeleteService", handler.DeleteServiceHandler)
-	http.HandleFunc("/Addtransaction", handler.AddTransactionHandler)
-	http.HandleFunc("/Alltransaction", handler.GetAllTransactionHandler)
+	http.HandleFunc("/getSevicebyId", handler.GetServiceByIdHandler)
+	http.HandleFunc("/addService", handler.AddServiceHandler)
+	http.HandleFunc("/updateService", handler.UpdateServiceHandler)
+	http.HandleFunc("/deleteService", handler.DeleteServiceHandler)
+	http.HandleFunc("/addtransaction", handler.AddTransactionHandler)
+	http.HandleFunc("/alltransaction", handler.GetAllTransactionHandler)
 
 	http.ListenAndServe(":8080", nil)
 }
