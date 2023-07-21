@@ -52,9 +52,8 @@ func UpdateService(conDB *sql.DB, svc *Service) error {
 	}
 	return nil
 }
-
 func ServiceById(id int, conDB *sql.DB) (*Service, error) {
-	qry := "SELECT id, name, price, uom FROM ms_service WHERE id =$1"
+	qry := "SELECT id, name, price, uom FROM ms_service WHERE id = $1"
 
 	svc := &Service{}
 	err := conDB.QueryRow(qry, id).Scan(&svc.Id, &svc.Name, &svc.Price, &svc.Uom)
@@ -62,7 +61,7 @@ func ServiceById(id int, conDB *sql.DB) (*Service, error) {
 		if err == sql.ErrNoRows {
 			return nil, nil
 		}
-		return nil, fmt.Errorf("GetServiceById() : %w", err)
+		return nil, fmt.Errorf("ServiceById() : %w", err)
 	}
 	return svc, nil
 }

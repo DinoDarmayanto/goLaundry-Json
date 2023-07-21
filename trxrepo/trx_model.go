@@ -5,22 +5,22 @@ import (
 )
 
 type TransactionHeader struct {
-	No        int
-	StartDate time.Time
-	EndDate   time.Time
-	CustName  string
-	Phone     string
+	No        int       `json:"no"`
+	StartDate time.Time `json:"start_date"`
+	EndDate   time.Time `json:"end_date"`
+	CustName  string    `json:"customer_name"`
+	Phone     string    `json:"phone"`
 
-	ArrDetail []TransactionDetail
+	ArrDetail []TransactionDetail `json:"transaction_details"`
 }
 
 type TransactionDetail struct {
-	Id          int
-	No          string
-	ServiceName float64
-	Qty         float64
-	Price       float64
-	Uom         string
+	Id          int     `json:"id"`
+	No          string  `json:"no"`
+	ServiceName float64 `json:"service_name"`
+	Qty         float64 `json:"quantity"`
+	Price       float64 `json:"price"`
+	Uom         string  `json:"uom"`
 }
 
 type TransactionOutput struct {
