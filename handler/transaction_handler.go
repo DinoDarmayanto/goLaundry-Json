@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"goJson/myutils"
 	"goJson/trxrepo"
 	"io/ioutil"
@@ -41,7 +42,7 @@ func AddTransactionHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Berhasil Add Data"))
 }
 
-func GetAllTransactionHandler(w http.ResponseWriter, r *http.Request) {
+func GetbytrxNoTransactionHandler(w http.ResponseWriter, r *http.Request) {
 	httpMethod := r.Method
 	if httpMethod != "GET" {
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -50,6 +51,8 @@ func GetAllTransactionHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	trxNoStr := r.FormValue("trxNo")
+	fmt.Println("trxNoStr:", trxNoStr) // Debug statement, cek nilai trxNoStr
+
 	trxNo, err := strconv.Atoi(trxNoStr)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)

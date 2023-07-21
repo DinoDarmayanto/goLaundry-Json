@@ -5,39 +5,62 @@ import (
 	"goJson/myutils"
 	"goJson/svcrepo"
 	"io/ioutil"
+
 	"net/http"
 	"strconv"
 )
 
 func GetServiceHandler(w http.ResponseWriter, r *http.Request) {
-	_, err := svcrepo.AllService(myutils.GetDBConnection())
+	services, err := svcrepo.AllService(myutils.GetDBConnection())
 	if err != nil {
 		w.Write([]byte("Tidak mendapatkan data"))
+		return
 	}
+
+	// Convert the 'services' slice to JSON format
+	servicesJSON, err := json.Marshal(services)
+	if err != nil {
+		w.Write([]byte("Error saat menghasilkan JSON"))
+		return
+	}
+
+	// Set the response header to indicate JSON content type
+	w.Header().Set("Content-Type", "application/json")
+
+	// Write the JSON data as the HTTP response
+	w.Write(servicesJSON)
 }
 
-func GetServiceByIdHandler(w http.ResponseWriter, r *http.Request) {
-	idStr := r.FormValue("id")
-	id, err := strconv.Atoi(idStr)
+func GetServiveByIdHandler(w http.ResponseWriter, r *http.Request) {
+	id := r.FormValue("id")
+	svcId, err := strconv.Atoi(id)
 	if err != nil {
-		w.Write([]byte("id tidak valid"))
+		w.Write([]byte("ID tidak valid"))
 		return
 	}
-	svc, err := svcrepo.ServiceById(id, myutils.GetDBConnection())
+
+	svc, err := svcrepo.ServiceById(svcId, myutils.GetDBConnection())
 	if err != nil {
-		w.Write([]byte("id tidak ada di database"))
+		w.Write([]byte("Error ketika mengambil service ke DB"))
 		return
 	}
+
 	if svc == nil {
-		w.Write([]byte("Service tidak ditemukan"))
+		w.Write([]byte("Service Tidak di temukan"))
 		return
 	}
+
+	// Convert the 'svc' object to JSON format
 	serviceJSON, err := json.Marshal(svc)
 	if err != nil {
 		w.Write([]byte("Error saat menghasilkan JSON"))
 		return
 	}
-	w.Header().Set("Content-type", "application/json")
+
+	// Set the response header to indicate JSON content type
+	w.Header().Set("Content-Type", "application/json")
+
+	// Write the JSON data as the HTTP response
 	w.Write(serviceJSON)
 }
 
